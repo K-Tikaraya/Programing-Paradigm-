@@ -1,0 +1,93 @@
+; Q1: Factorial Function
+(define (factorial n)
+  (if (>= n 0)
+      (if (= n 0)
+          1
+          (* n (factorial (- n 1))))
+      (error "Factorial is not defined for negative numbers")))
+
+; Q2: Fibonacci Function
+(define (fibonacci n)
+  (cond ((= n 0) 0)
+        ((= n 1) 1)
+        (else (+ (fibonacci (- n 1)) (fibonacci (- n 2))))))
+
+; Q3: Highest Common Factor (HCF) Function
+(define (hcf n1 n2)
+  (if (= n2 0)
+      n1
+      (hcf n2 (remainder n1 n2))))
+
+; Q4: Function to find the largest number among a list of natural numbers
+; Function to find the largest among N natural numbers
+(define (find-largest lst)
+  (if (null? lst)
+      (error "List is empty, cannot find the largest number")
+      (let loop ((numbers lst) (max-num (car lst)))
+        (cond ((null? numbers) max-num)
+              ((not (number? (car numbers))) 
+               (error "List contains non-numeric values"))
+              ((> (car numbers) max-num) 
+               (loop (cdr numbers) (car numbers)))
+              (else 
+               (loop (cdr numbers) max-num))))))
+
+
+; Q5: Compute the Sum of N Natural Numbers
+(define (sum-of-natural-numbers n)
+  (if (>= n 0)
+      (let loop ((i 1) (sum 0))
+        (if (> i n)
+            sum
+            (loop (+ i 1) (+ sum i))))
+      (error "Sum of natural numbers is undefined for negative integers")))
+
+; Function to read a list of numbers from user input
+(define (read-number-list)
+  (display "Enter a list of numbers separated by spaces: ")
+  (let ((input (read-line)))
+    (map string->number (string-split input " "))))
+
+; Main Program
+(display "Choose an operation:\n")
+(display "1. Compute factorial of a number\n")
+(display "2. Compute N-th Fibonacci number\n")
+(display "3. Compute HCF of two numbers\n")
+(display "4. Find the largest among N numbers\n")
+(display "5. Compute the sum of N natural numbers\n")
+
+(define choice (read))
+(cond ((= choice 1)
+       (begin
+         (display "Enter a number to compute its factorial: ")
+         (define num (read))
+         (display (factorial num))
+         (newline)))
+      ((= choice 2)
+       (begin
+         (display "Enter a number to compute its Fibonacci number: ")
+         (define num (read))
+         (display (fibonacci num))
+         (newline)))
+      ((= choice 3)
+       (begin
+         (display "Enter two numbers to compute their HCF: ")
+         (define num1 (read))
+         (define num2 (read))
+         (display (hcf num1 num2))
+         (newline)))
+      ((= choice 4)
+       (begin
+         (define numbers '(3456 5675 1234 6789 435 321 45))
+        (display "The largest number is: ")
+          (display (find-largest numbers))
+        (newline)))
+      ((= choice 5)
+       (begin
+         (display "Enter a number to compute the sum of natural numbers up to: ")
+         (define num (read))
+         (display (sum-of-natural-numbers num))
+         (newline)))
+      (else
+       (display "Invalid choice. Please choose a number between 1 and 5.\n")))
+ 
